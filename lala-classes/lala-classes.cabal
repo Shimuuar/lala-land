@@ -1,0 +1,26 @@
+Name:           lala-classes
+Version:        0.1
+Synopsis:       Experiments with generic API for linear algebra
+Description:
+  Experiments with linear algebra API for haskell
+
+Cabal-Version:  >= 1.10
+License:        BSD3
+License-File:   LICENSE
+Author:         Aleksey Khudyakov <alexey.skladnoy@gmail.com>
+Maintainer:     Aleksey Khudyakov <alexey.skladnoy@gmail.com>
+Homepage:       https://github.com/Shimuuar/lala-land
+Category:       Data
+Build-Type:     Simple
+
+source-repository head
+  type:     git
+  location: https://github.com/Shimuuar/lala-land.git
+
+Library
+  Ghc-options:          -Wall
+  Default-Language:    Haskell2010
+  Build-Depends:
+    base >=4.6 && <5
+  Exposed-modules:
+    Numeric.LALA.VectorSpace
