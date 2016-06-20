@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE TypeFamilies #-}
 -- |
 -- Necessary type classes for operations with vector spaces
@@ -30,7 +31,7 @@ class AdditiveMonoid v where
 class AdditiveMonoid v => AdditiveGroup v where
   -- | Get inverse element under addition
   negateV :: v -> v
-  negateV x = zeroV - x
+  negateV x = zeroV .-. x
   -- | Subtraction
   (.-.)   :: v -> v -> v
   x .-. y = x .+. negateV y
@@ -40,7 +41,7 @@ class AdditiveGroup v => VectorSpace v where
   type Scalar v :: *
   (*.) :: Scalar v -> v -> v
   (.*) :: v -> Scalar v -> v
-
+  (.*) = flip (*.)
 
 ----------------------------------------------------------------
 -- Instances
@@ -72,3 +73,11 @@ instance AdditiveGroup Float where
 instance AdditiveGroup Double where
   negateV = negate
   (.-.) = (-)
+
+
+
+instance (AdditiveMonoid a, AdditiveMonoid b) => AdditiveMonoid (a,b) where
+  zeroV = (zeroV,zeroV)
+  (!a1,!b1) .+. (!a2,!b2) = let !a = a1 .+. a2
+                                !b = b1 .+. b2
+                            in (a, b)
